@@ -1,0 +1,31 @@
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity RegisterFile is
+    port (
+        clk         : in  std_logic;
+        enable      : in  std_logic;
+        write       : in  std_logic;
+        target      : in  std_logic_vector(1 downto 0);
+        data_in     : in  std_logic_vector(7 downto 0);
+        data_out    : out std_logic_vector(7 downto 0)
+    );
+end RegisterFile;
+
+architecture Behavioral of RegisterFile is
+    type RegisterArray is array(0 to 3) of std_logic_vector(7 downto 0);
+    signal registers : RegisterArray;
+begin
+    process (clk)
+    begin
+        if rising_edge(clk) then
+            if enable = '1' then
+                if write = '1' then
+                    registers(to_integer(unsigned(target))) <= data_in;
+                end if;
+                
+                data_out <= registers(to_integer(unsigned(target)));
+            end if;
+        end if;
+    end process;
+end Behavioral;

@@ -1,0 +1,86 @@
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity ControlUnit is
+    port (
+        opcode   : in  std_logic_vector(3 downto 0);
+        func     : in  std_logic_vector(2 downto 0);
+        WE       : out std_logic;
+        Smux     : out std_logic_vector(1 downto 0);
+        S        : out std_logic_vector(3 downto 0);
+        Exop     : out std_logic_vector(1 downto 0);
+        Imux     : out std_logic_vector(1 downto 0);
+        str      : out std_logic;
+        ld       : out std_logic;
+        Lmux     : out std_logic_vector(1 downto 0);
+        pcplus1  : out std_logic;
+        wpc      : out std_logic;
+        beq      : out std_logic;
+        bne      : out std_logic;
+        bgt      : out std_logic;
+        jump     : out std_logic;
+        Rtype    : out std_logic
+    );
+end ControlUnit;
+
+architecture Behavioral of ControlUnit is
+begin
+    process (opcode, func)
+    begin
+        case opcode is
+            when "0000" =>
+                WE      <= '1';
+                Smux    <= "00";
+                S       <= "0000";
+                Exop    <= "11";
+                Imux    <= "00";
+                str     <= '0';
+                ld      <= '0';
+                Lmux    <= "00";
+                pcplus1 <= '1';
+                wpc     <= '1';
+                beq     <= '1';
+                bne     <= '0';
+                bgt     <= '0';
+                jump    <= '0';
+                Rtype   <= '0';
+                
+            when "0001" =>
+                WE      <= '1';
+                Smux    <= "00";
+                S       <= "0000";
+                Exop    <= "11";
+                Imux    <= "00";
+                str     <= '0';
+                ld      <= '0';
+                Lmux    <= "00";
+                pcplus1 <= '1';
+                wpc     <= '1';
+                beq     <= '0';
+                bne     <= '0';
+                bgt     <= '0';
+                jump    <= '0';
+                Rtype   <= '0';
+
+            -- Add more cases for other opcodes and func values
+
+            when others =>
+                -- Default case
+                WE      <= '0';
+                Smux    <= "00";
+                S       <= "0000";
+                Exop    <= "00";
+                Imux    <= "00";
+                str     <= '0';
+                ld      <= '0';
+                Lmux    <= "00";
+                pcplus1 <= '0';
+                wpc     <= '0';
+                beq     <= '0';
+                bne     <= '0';
+                bgt     <= '0';
+                jump    <= '0';
+                Rtype   <= '0';
+        end case;
+    end process;
+end Behavioral;
